@@ -7,10 +7,15 @@ export default class BitcoinEuroPrice extends LightningElement {
     euroPrice;
 
     connectedCallback() {
+        this.fetchPrice();
+        setInterval(this.fetchPrice, 10000);
+    }
+
+    fetchPrice() {
         fetch(bitcoinPriceProvider)
             .then(response => response.json())
             .then(json => {
                 this.euroPrice = json.data.amount;
-            })
+            });
     }
 }
