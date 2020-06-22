@@ -1,6 +1,10 @@
 import {createElement} from 'lwc';
 import BitcoinEuroPrice from 'c/bitcoinEuroPrice';
 
+const priceUnderTest = createElement('c-bitcoinEuroPrice', {
+    is: BitcoinEuroPrice
+});
+
 describe('c-bitcoinEuroPrice', () => {
     afterEach(() => {
         while (document.body.firstChild) {
@@ -10,6 +14,7 @@ describe('c-bitcoinEuroPrice', () => {
 
     it('fetches price and sets the value', async () => {
         // Arrange
+        jest.useFakeTimers();
         const testAmount = '8448.947391885';
         fetch = global.fetch = mockFetch({
             'data': {
@@ -18,11 +23,9 @@ describe('c-bitcoinEuroPrice', () => {
                 'amount': testAmount
             }
         });
-        const priceUnderTest = createElement('c-bitcoinEuroPrice', {
-            is: BitcoinEuroPrice
-        });
 
         // Act
+        priceUnderTest.refreshRateInSeconds = 10;
         document.body.appendChild(priceUnderTest);
 
         // Assert
@@ -33,13 +36,16 @@ describe('c-bitcoinEuroPrice', () => {
 
         const displayPrice = priceUnderTest.shadowRoot.querySelector('lightning-formatted-number');
         expect(displayPrice.value).toEqual(testAmount);
+
+        jest.advanceTimersByTime(30000);
+        expect(global.fetch).toHaveBeenCalledTimes(4);
     });
 });
 
 function mockFetch(mockApiResponse) {
     return jest
         .fn()
-        .mockImplementationOnce(() =>
+        .mockImplementation(() =>
             Promise.resolve({
                 ok: true,
                 json: () => Promise.resolve(mockApiResponse),
