@@ -4,4 +4,7 @@
     <description>Bitcoin Euro Price</description>
     <isExposed>true</isExposed>
     <masterLabel>Bitcoin Euro Price</masterLabel>
+    <targets>
+        <target>lightningCommunity__Page</target>
+    </targets>
 </LightningComponentBundle>
