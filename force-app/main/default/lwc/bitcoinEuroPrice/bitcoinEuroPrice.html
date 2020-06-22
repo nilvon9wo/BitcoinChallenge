@@ -1,3 +1,12 @@
 <template>
-    Hello World!
+    <div class="slds-box slds-card">
+        Current price of a bitcoin in Euro:&nbsp;
+        <lightning-formatted-number
+                currency-code="EUR"
+                format-style="currency"
+                title="Current price of a bitcoin in Euro"
+                value={euroPrice}
+        >
+        </lightning-formatted-number>
+    </div>
 </template>
