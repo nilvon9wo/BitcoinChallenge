@@ -16,13 +16,7 @@ describe('c-bitcoinEuroPrice', () => {
         // Arrange
         jest.useFakeTimers();
         const testAmount = '8448.947391885';
-        fetch = global.fetch = mockFetch({
-            'data': {
-                'base': 'BTC',
-                'currency': 'EUR',
-                'amount': testAmount
-            }
-        });
+        fetch = global.fetch = mockFetch(createMockApiResponse(testAmount));
 
         // Act
         priceUnderTest.refreshRateInSeconds = 10;
@@ -33,14 +27,22 @@ describe('c-bitcoinEuroPrice', () => {
 
         expect(global.fetch).toHaveBeenCalledTimes(1);
         expect(global.fetch).toHaveBeenCalledWith('https://api.coinbase.com/v2/prices/spot?currency=EUR');
-
-        const displayPrice = priceUnderTest.shadowRoot.querySelector('lightning-formatted-number');
-        expect(displayPrice.value).toEqual(testAmount);
+        assertPrice(testAmount);
 
         jest.advanceTimersByTime(30000);
         expect(global.fetch).toHaveBeenCalledTimes(4);
     });
 });
+
+function createMockApiResponse(testAmount) {
+    return {
+        data: {
+            base: 'BTC',
+            currency: 'EUR',
+            amount: testAmount
+        }
+    };
+}
 
 function mockFetch(mockApiResponse) {
     return jest
@@ -56,4 +58,9 @@ function mockFetch(mockApiResponse) {
 
 function flushPromises() {
     return new Promise(setImmediate);
+}
+
+function assertPrice(expectedPrice) {
+    const displayPrice = priceUnderTest.shadowRoot.querySelector('lightning-formatted-number');
+    expect(displayPrice.value).toEqual(expectedPrice);
 }
