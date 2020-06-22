@@ -1,7 +1,6 @@
 import {LightningElement, api, track} from 'lwc';
 
 const bitcoinPriceProvider = 'https://api.coinbase.com/v2/prices/spot?currency=EUR';
-
 export default class BitcoinEuroPrice extends LightningElement {
     @api
     refreshRate;
@@ -15,7 +14,6 @@ export default class BitcoinEuroPrice extends LightningElement {
     }
 
     fetchPrice() {
-
         fetch(bitcoinPriceProvider)
             .then(response => response.json())
             .then(json => {
