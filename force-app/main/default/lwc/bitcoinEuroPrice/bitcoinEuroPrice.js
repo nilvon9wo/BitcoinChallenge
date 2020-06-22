@@ -10,7 +10,6 @@ export default class BitcoinEuroPrice extends LightningElement {
         fetch(bitcoinPriceProvider)
             .then(response => response.json())
             .then(json => {
-                console.log('### response:', json);
                 this.euroPrice = json.data.amount;
             })
     }

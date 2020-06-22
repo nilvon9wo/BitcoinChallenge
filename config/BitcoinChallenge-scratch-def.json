@@ -2,6 +2,6 @@
   "orgName": "BitcoinChallenge",
   "edition": "Developer",
   "language": "en_US",
-  "hasSampleData": false,
+  "hasSampleData": true,
   "features": []
 }
