@@ -7,6 +7,11 @@ export default class BitcoinEuroPrice extends LightningElement {
     euroPrice;
 
     connectedCallback() {
-        this.euroPrice = 5.42;
+        fetch(bitcoinPriceProvider)
+            .then(response => response.json())
+            .then(json => {
+                console.log('### response:', json);
+                this.euroPrice = json.data.amount;
+            })
     }
 }
