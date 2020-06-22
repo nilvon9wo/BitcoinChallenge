@@ -6,5 +6,11 @@
     <masterLabel>Bitcoin Euro Price</masterLabel>
     <targets>
         <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
     </targets>
+    <targetConfigs>
+        <targetConfig  targets="lightningCommunity__Default">
+            <property name="refreshRate" type="Integer" default="10"/>
+        </targetConfig>
+    </targetConfigs>
 </LightningComponentBundle>
