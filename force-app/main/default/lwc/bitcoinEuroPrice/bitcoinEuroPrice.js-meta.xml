@@ -10,7 +10,7 @@
     </targets>
     <targetConfigs>
         <targetConfig  targets="lightningCommunity__Default">
-            <property name="refreshRate" type="Integer" default="10"/>
+            <property name="refreshRateInSeconds" type="Integer" default="10"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
